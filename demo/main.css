@@ -1,0 +1,50 @@
+img {
+  vertical-align: sub;
+  max-width: 100%;
+}
+
+body {
+  background: rgba(153,0,107,1) no-repeat;
+  background: -moz-linear-gradient(45deg, rgba(153,0,107,1) 0%, rgba(158,24,0,1) 100%);
+  background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(153,0,107,1)), color-stop(100%, rgba(158,24,0,1)));
+  background: -webkit-linear-gradient(45deg, rgba(153,0,107,1) 0%, rgba(158,24,0,1) 100%);
+  background: -o-linear-gradient(45deg, rgba(153,0,107,1) 0%, rgba(158,24,0,1) 100%);
+  background: -ms-linear-gradient(45deg, rgba(153,0,107,1) 0%, rgba(158,24,0,1) 100%);
+  background: linear-gradient(45deg, rgba(153,0,107,1) 0%, rgba(158,24,0,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#99006b', endColorstr='#9e1800', GradientType=1 );
+  background-size: cover;
+  
+  font-family: 'Open Sans';
+  min-height: 100vh;
+}
+
+.grid-wrapper,
+.filter-wrapper {
+  max-width: 1280px;
+  display: block;
+  margin: 100px auto;
+}
+
+.song {
+  display: inline-block;
+  box-shadow: 0px 0px 6px #000;
+  margin: 5px 0;
+}
+.song .img,
+.song .title-wrapper {
+  display: block;
+  width: 200px;
+}
+
+.song .title-wrapper {
+  background-color: rgba(0, 0, 0, .75);
+  color: white;
+  font-weight: 300;
+}
+.song .title-wrapper .title {
+  display: inline-block;
+  padding: 4px 14px;
+  font-size: .95rem;
+  line-height: 1.25em;
+  text-align: center;
+}

@@ -5,7 +5,7 @@ module.exports = {
   name: 'min',
   entry: './app/src/Siftout.js',
   output: {
-    filename: 'Siftout.min.js',
+    filename: 'siftout.min.js',
     path: './build',
     library: 'Siftout',
     libraryTarget: 'umd',

@@ -13,7 +13,7 @@ DEFAULT_OPTIONS = {
   itemSelector: '.siftout-item',
   itemWidth: undefined, //if provided #columns will be ignored and a custom number of columns will be set from itemWidth, columnGap and the size of the grid
   columns: 4,
-  columnGap: 25,
+  columnGap: 25, //only auto if itemWidth defined
   rowGap: 25,
   cascadeAnimations: true,
   cascadeDuration: 880, //ms
@@ -46,7 +46,8 @@ GRID_CSS = {
   perspective: '1000px',
   perspectiveOrigin: 'center center',
   backfaceVisibility: 'hidden',
-  transition: '.64s linear'
+  transition: '.68 ease-out'
+  // overflow: 'hidden'
 }
 
 
@@ -74,26 +75,34 @@ module.exports = class Siftout {
   }
   
   setColumnWidth(){
+    
     if (this.opt.itemWidth !== undefined){
       let gridWidth = this.opt.gridElement.offsetWidth,
-          possibleColumns = Math.floor(gridWidth / this.opt.itemWidth),
-          hypotheticalWidth = ((possibleColumns - 1) * this.opt.columnGap) + (this.opt.itemWidth * possibleColumns)
+          possibleColumns = Math.floor(gridWidth / this.opt.itemWidth)
+      
+      if (this.opt.columnGap === 'auto' && possibleColumns > 1){
+        this.opt.columnGap = (gridWidth - (possibleColumns * this.opt.itemWidth)) / (possibleColumns - 1)
+      } else {
+        this.opt.columnGap = gridWidth
+      }
+      
+      let hypotheticalWidth = ((possibleColumns - 1) * this.opt.columnGap) + (this.opt.itemWidth * possibleColumns)
       
       while(hypotheticalWidth > gridWidth){
         possibleColumns -= 1
         hypotheticalWidth = ((possibleColumns - 1) * this.opt.columnGap) + (this.opt.itemWidth * possibleColumns)
       }
       
-      this.colWidth = this.opt.itemWidth
+      this.opt.colWidth = this.opt.itemWidth
       this.opt.columns = possibleColumns
     } else {
-      this.colWidth = ((this.opt.gridElement.offsetWidth - (this.opt.columnGap * (this.opt.columns - 1))) / this.opt.columns)
+      this.opt.colWidth = ((this.opt.gridElement.offsetWidth - (this.opt.columnGap * (this.opt.columns - 1))) / this.opt.columns)
     }
   }
   
   setVariableCSS(){
-    ITEM_CSS.maxWidth = this.colWidth + 'px'
-    ITEM_CSS.width = this.colWidth + 'px'
+    ITEM_CSS.maxWidth = this.opt.colWidth + 'px'
+    ITEM_CSS.width = this.opt.colWidth + 'px'
     ITEM_CSS.transition = this.opt.transition
     
     if(this.browser.prefix){
@@ -170,14 +179,11 @@ module.exports = class Siftout {
             done = true
           }
         }
-        // this.applyStyles(item.item,{
-        //   'transform': 'translateX('+(iCol * this.colWidth + iCol * this.opt.columnGap)+'px) translateY('+YPos+'px)'
-        // }, false, animationTimerMultiplier)
         animationQueue.push({
           item: item.item,
           active: item.item.classList.contains('active'),
           css: {
-            transform: 'translateX('+(iCol * this.colWidth + iCol * this.opt.columnGap)+'px) translateY('+YPos+'px)',
+            transform: 'translateX('+(iCol * this.opt.colWidth + iCol * this.opt.columnGap)+'px) translateY('+YPos+'px)',
           }
         })
       })
