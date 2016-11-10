@@ -5,12 +5,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "start": "webpack-dev-server",
+    "prod": "webpack --config ./webpack.production.config.js",
     "dev": "yarn run build | yarn run start"
   },
   "author": "Gerard Rodes",
   "license": "MIT",
   "description": "",
   "devDependencies": {
+    "babel-cli": "^6.18.0",
     "babel-core": "^6.18.2",
     "babel-loader": "^6.2.7",
     "babel-polyfill": "^6.16.0",
@@ -21,5 +23,8 @@
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.16.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "babel-plugin-transform-object-assign": "^6.8.0",
+    "core-js": "^2.4.1"
+  }
 }
