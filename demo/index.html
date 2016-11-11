@@ -50,10 +50,10 @@
             </div>
             
             <div class="control-group">
-              <div class="option-wrapper">
+             <!--  <div class="option-wrapper">
                 <input type="checkbox" checked id="control-cascade-animations" />
                 <label for="control-cascade-animations">Cascade animations</label>
-              </div>
+              </div> -->
               <div class="option-wrapper">
                 <label for="control-cascade-duration">Cascade animations duration</label>
                 <input type="number" id="control-cascade-duration" placeholder="880" />
@@ -296,7 +296,7 @@
           },
           rowsValue               = document.getElementById('control-rows').value && document.getElementById('control-column-gap-auto').checked ? parseInt(document.getElementById('control-rows').value) : undefined,
           rowGapValue             = document.getElementById('control-row-gap').value ? parseInt(document.getElementById('control-row-gap').value) : parseInt(document.getElementById('control-row-gap').placeholder),
-          cascadeAnimationsValue  = document.getElementById('control-cascade-animations').checked,
+          // cascadeAnimationsValue  = document.getElementById('control-cascade-animations').checked,
           cascadeDurationValue    = document.getElementById('control-cascade-duration').value ? parseInt(document.getElementById('control-cascade-duration').value) : parseInt(document.getElementById('control-cascade-duration').placeholder),
           transitionValue         = document.getElementById('control-transition').value ? document.getElementById('control-transition').value : document.getElementById('control-transition').placeholder,
           options = {
@@ -305,7 +305,7 @@
             columnGap: columnGapValue(),
             rows: rowsValue,
             rowGap: rowGapValue,
-            cascadeAnimations: cascadeAnimationsValue,
+            // cascadeAnimations: cascadeAnimationsValue,
             cascadeDuration: cascadeDurationValue,
             transition: transitionValue
           }
