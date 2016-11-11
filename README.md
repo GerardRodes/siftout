@@ -9,8 +9,6 @@ Sort elements by categories on responsive grid
 - cascade animations
 - demo folder with live configurable settings
 
-<div style="text-align:center">
 ![Demo preview](http://i.imgur.com/g29DZvN.gif)
-</div>
 
 _writting..._
