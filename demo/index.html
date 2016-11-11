@@ -4,204 +4,263 @@
   <title>Siftout - Demo</title>
   
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="./reset.css" />
+  <link rel="stylesheet" type="text/css" href="./grid.css" />
   <link rel="stylesheet" type="text/css" href="./main.css" />
   
 </head>
 <body>
 
-  <div class="filter-wrapper">
-    <ul id="filter">
-      <li><a href="#" data-group="all" >All Songs</a></li>
-      <li><a href="#" data-group="mixtape" >Mixtape</a></li>
-      <li><a href="#" data-group="monstercat" >Monstercat</a></li>
-      <li><a href="#" data-group="groovy" >Groovy</a></li>
-      <li><a href="#" data-group="dance" >Dance</a></li>
-      <li><a href="#" data-group="amazing" >Amazing</a></li>
-      <li><a href="#" data-group="deep" >Deep</a></li>
-    </ul>
-  </div>
-  
-  <div class="grid-wrapper">
-    <div id="grid">
-      <div class="item" data-group="all, mixtape, groovy" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000192917877-vmjd3u-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Spinnin' Sessions 183 Guestmix: Bali Bandits</span></div>
+  <div class="container-fluid">
+    <div class="row row-eq-height">
+      <div class="col-md-2 no-pad">
+        <div class="options-wrapper">
+          <div id="options">
+          
+            <div class="control-group">
+              <div class="option-wrapper">
+                <label for="control-item-width">Item width</label>
+                <input type="number" id="control-item-width" placeholder="auto" />
+              </div>
+              <div class="option-wrapper">
+                <label for="control-transition">Item transition</label>
+                <input type="text" id="control-transition" placeholder="transform 375ms ease-out, opacity 375ms ease-out" />
+              </div>
+            </div>
+            
+            <div class="control-group">
+              <div class="option-wrapper">
+                <label for="control-columns">Number of columns</label>
+                <input type="number" id="control-columns" placeholder="5" />
+              </div>
+              <div class="option-wrapper">
+                <label for="control-column-gap">Column gap</label>
+                <input type="number" id="control-column-gap" placeholder="25" />
+                <input type="checkbox" id="control-column-gap-auto" title="Auto gap size" />
+              </div>
+              <div class="option-wrapper">
+                <label for="control-rows">Number of rows</label>
+                <input type="number" id="control-rows" disabled placeholder="Only with column gap auto" />
+              </div>
+              <div class="option-wrapper">
+                <label for="control-row-gap">Row gap</label>
+                <input type="number" id="control-row-gap" placeholder="25" />
+              </div>
+            </div>
+            
+            <div class="control-group">
+              <div class="option-wrapper">
+                <input type="checkbox" checked id="control-cascade-animations" />
+                <label for="control-cascade-animations">Cascade animations</label>
+              </div>
+              <div class="option-wrapper">
+                <label for="control-cascade-duration">Cascade animations duration</label>
+                <input type="number" id="control-cascade-duration" placeholder="880" />
+              </div>
+            </div>
+            
+            <button id="apply" >Apply</button>
+          </div>
         </div>
       </div>
-      <div class="item" data-group="all, monstercat" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000192511333-pzhnes-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >DROELOE - Bon Voyage</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, dance" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000188118589-ox8eks-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Far East Movement X Marshmello - Freal Luv Ft. Chanyeol & Tinas</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, monstercat, dance" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000179358713-p863zu-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Laszlo - Airglow</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, groovy, amazing" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000182063644-xp95q8-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Opia - YDU (Pluto Remix)</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, dance, amazing" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000192308856-j6wmrc-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Lucian - Calm Waters (MVMMALS Remix)</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, monstercat" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000157606202-tqo0ud-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >San Holo - They Just Haven't Seen It (ft. The Nicholas)</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, groovy" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000191644837-wfsq6e-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Coda</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, groovy, dance" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000191896377-lu8fn3-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Sincerely...</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, amazing" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000190371521-6v5tr2-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Trouble (feat. Landis)</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, dance, amazing" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000189527361-aytlws-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Virtual Riot - In My Head (Ft. PRXZM)</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, amazing" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000177300290-n0x3o2-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Chet Porter - Stay (feat. Chelsea Cutler)</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, dance, amazing" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000091262754-h1cxix-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Zella Day - Compass (Louis The Child Remix)</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, deep, amazing" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000190469774-cfct1i-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Diamond In A Lotus - Get Mine ft. Hanna Winters</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, dance, amazing" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000190025678-898b3i-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Let Go (ft. Andrew Paley)</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, amazing" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000190058488-luunz4-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Whethan VS Oliver Tree - When I'm Down</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, dance" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000176285324-iax9yu-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Can't Hide (feat. Ashe)</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, deep" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000189521308-5u1a0k-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >On Planets - Spectacle</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, mixtape" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000189719435-6aisey-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Diplo & Friends Mix</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, deep" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000189983181-azrg5q-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Porter Robinson & Madeon - Shelter</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, deep, dance" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000188112630-z74p1h-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Cafuné - Warm Body (Birocratic Remix) [Premiere]</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, groovy" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000186414053-k79ag8-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Mickey : "Harlem" Feat. Malika</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, groovy, dance" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000161212569-uqysx8-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Morgan Page ft. Angelika Vee – Safe Till Tomorrow (Bee’s Knees)</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, groovy, deep" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000156292821-shw6zq-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Sam Wills - Electrified (Prod. Karma Kid)</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, groovy, dance" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000186625980-u04tpj-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Aristo G - Stay Amazing</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, mixtape" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000189085885-b45zgu-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >IRL Guest Mix 022: Bee's Knees</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, deep, dance" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000183428279-h2up77-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Kozah - Unleash ft. Otherside</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, deep" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000177101361-y8avrq-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Breath</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, monstercat" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000185822672-d4m94x-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Direct, Mr FijiWiji, & Holly Drummond - Trust In Me</span></div>
-        </div>
-      </div>
-      <div class="item" data-group="all, groovy, deep" >
-        <div class="song" >
-          <img class="img" src="https://i1.sndcdn.com/artworks-000180898877-cnzinx-t200x200.jpg" />
-          <div class="title-wrapper"><span class="title" >Prismo - Senses (William Black Remix)</span></div>
+      <div class="col-md-10">
+        <div class="content-wrapper">
+          
+          <h1>Siftout</h1>
+        
+          <ul id="filter">
+            <li><a href="#" class="active" data-group="all" >All Songs</a></li>
+            <li><a href="#" data-group="mixtape" >Mixtape</a></li>
+            <li><a href="#" data-group="monstercat" >Monstercat</a></li>
+            <li><a href="#" data-group="groovy" >Groovy</a></li>
+            <li><a href="#" data-group="dance" >Dance</a></li>
+            <li><a href="#" data-group="tight" >Tight</a></li>
+            <li><a href="#" data-group="deep" >Deep</a></li>
+          </ul>
+          
+          <div id="grid">
+            <div class="item" data-group="all, mixtape, groovy" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000192917877-vmjd3u-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Spinnin' Sessions 183 Guestmix: Bali Bandits</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, monstercat" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000192511333-pzhnes-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >DROELOE - Bon Voyage</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, dance" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000188118589-ox8eks-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Far East Movement X Marshmello - Freal Luv Ft. Chanyeol & Tinas</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, monstercat, dance" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000179358713-p863zu-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Laszlo - Airglow</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, groovy, tight" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000182063644-xp95q8-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Opia - YDU (Pluto Remix)</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, dance, tight" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000192308856-j6wmrc-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Lucian - Calm Waters (MVMMALS Remix)</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, monstercat" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000157606202-tqo0ud-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >San Holo - They Just Haven't Seen It (ft. The Nicholas)</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, groovy" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000191644837-wfsq6e-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Coda</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, groovy, dance" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000191896377-lu8fn3-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Sincerely...</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, tight" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000190371521-6v5tr2-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Trouble (feat. Landis)</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, dance, tight" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000189527361-aytlws-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Virtual Riot - In My Head (Ft. PRXZM)</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, tight" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000177300290-n0x3o2-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Chet Porter - Stay (feat. Chelsea Cutler)</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, dance, tight" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000091262754-h1cxix-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Zella Day - Compass (Louis The Child Remix)</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, deep, tight" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000190469774-cfct1i-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Diamond In A Lotus - Get Mine ft. Hanna Winters</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, dance, tight" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000190025678-898b3i-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Let Go (ft. Andrew Paley)</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, tight" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000190058488-luunz4-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Whethan VS Oliver Tree - When I'm Down</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, dance" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000176285324-iax9yu-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Can't Hide (feat. Ashe)</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, deep" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000189521308-5u1a0k-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >On Planets - Spectacle</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, mixtape" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000189719435-6aisey-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Diplo & Friends Mix</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, deep" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000189983181-azrg5q-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Porter Robinson & Madeon - Shelter</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, deep, dance" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000188112630-z74p1h-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Cafuné - Warm Body (Birocratic Remix) [Premiere]</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, groovy" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000186414053-k79ag8-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Mickey : "Harlem" Feat. Malika</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, groovy, dance" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000161212569-uqysx8-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Morgan Page ft. Angelika Vee – Safe Till Tomorrow (Bee’s Knees)</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, groovy, deep" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000156292821-shw6zq-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Sam Wills - Electrified (Prod. Karma Kid)</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, groovy, dance" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000186625980-u04tpj-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Aristo G - Stay tight</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, mixtape" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000189085885-b45zgu-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >IRL Guest Mix 022: Bee's Knees</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, deep, dance" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000183428279-h2up77-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Kozah - Unleash ft. Otherside</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, deep" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000177101361-y8avrq-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Breath</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, monstercat" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000185822672-d4m94x-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Direct, Mr FijiWiji, & Holly Drummond - Trust In Me</span></div>
+              </div>
+            </div>
+            <div class="item" data-group="all, groovy, deep" >
+              <div class="song" >
+                <img class="img" src="https://i1.sndcdn.com/artworks-000180898877-cnzinx-t200x200.jpg" />
+                <div class="title-wrapper"><span class="title" >Prismo - Senses (William Black Remix)</span></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -209,21 +268,82 @@
 
   <script type="text/javascript" src="../build/siftout.min.js" ></script>
   <script type="text/javascript" >
+    
+    var siftout = undefined
   
-    //Because I'm using img i want to the them to load to get correct height from elements
+    //Because I'm using images i want to wait them to load to get correct height from elements
     window.onload = function(){
-      var siftout = new Siftout({
+      siftout = new Siftout({
         gridElement: document.getElementById('grid'),
         filterElement: document.getElementById('filter'),
         itemSelector: '.item',
         columns: 5
-        // itemWidth: 200,
-        // columnGap: 'auto'
       })
-      
-      siftout.opt.gridElement.querySelectorAll('.item').forEach(item => item.style.textAlign = 'center')
-      console.dir(siftout)
     }
+    
+    document
+    .getElementById('apply')
+    .addEventListener('click', function(){
+      var itemWidthValue          = document.getElementById('control-item-width').value ? document.getElementById('control-item-width').value : undefined,
+          columnsValue            = document.getElementById('control-columns').value ? parseInt(document.getElementById('control-columns').value) : parseInt(document.getElementById('control-columns').placeholder),
+          columnGapValue          = function(){
+            var control = document.getElementById('control-column-gap')
+            if (control.disabled){
+              return 'auto'
+            } else {
+              return control.value ? parseInt(control.value) : parseInt(control.placeholder)  
+            }
+          },
+          rowsValue               = document.getElementById('control-rows').value && document.getElementById('control-column-gap-auto').checked ? parseInt(document.getElementById('control-rows').value) : undefined,
+          rowGapValue             = document.getElementById('control-row-gap').value ? parseInt(document.getElementById('control-row-gap').value) : parseInt(document.getElementById('control-row-gap').placeholder),
+          cascadeAnimationsValue  = document.getElementById('control-cascade-animations').checked,
+          cascadeDurationValue    = document.getElementById('control-cascade-duration').value ? parseInt(document.getElementById('control-cascade-duration').value) : parseInt(document.getElementById('control-cascade-duration').placeholder),
+          transitionValue         = document.getElementById('control-transition').value ? document.getElementById('control-transition').value : document.getElementById('control-transition').placeholder,
+          options = {
+            itemWidth: itemWidthValue,
+            columns: columnsValue,
+            columnGap: columnGapValue(),
+            rows: rowsValue,
+            rowGap: rowGapValue,
+            cascadeAnimations: cascadeAnimationsValue,
+            cascadeDuration: cascadeDurationValue,
+            transition: transitionValue
+          }
+          
+      siftout.init(options)
+      
+    })
+    
+    document
+    .getElementById('control-item-width')
+    .addEventListener('input', function(e){
+      if (this.value !== '') {
+        document.getElementById('control-columns').value = ''
+      }
+    })
+    
+    document
+    .getElementById('control-columns')
+    .addEventListener('input', function(e){
+      if (this.value !== '') {
+        document.getElementById('control-item-width').value = ''
+      }
+    })
+    
+    document
+    .getElementById('control-column-gap-auto')
+    .addEventListener('change', function(e){
+      if (this.checked) {
+        document.getElementById('control-column-gap').setAttribute('disabled','')
+        document.getElementById('control-rows').removeAttribute('disabled')
+        document.getElementById('control-rows').placeholder = ''
+      } else {
+        document.getElementById('control-column-gap').removeAttribute('disabled')
+        document.getElementById('control-rows').setAttribute('disabled','')
+        document.getElementById('control-rows').placeholder = 'Only with column gap auto'
+      }
+    })
+    
   </script>
 </body>
 </html>

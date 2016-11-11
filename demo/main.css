@@ -2,7 +2,6 @@ img {
   vertical-align: sub;
   max-width: 100%;
 }
-
 body {
   background: rgba(153,0,107,1) no-repeat;
   background: -moz-linear-gradient(45deg, rgba(153,0,107,1) 0%, rgba(158,24,0,1) 100%);
@@ -13,29 +12,51 @@ body {
   background: linear-gradient(45deg, rgba(153,0,107,1) 0%, rgba(158,24,0,1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#99006b', endColorstr='#9e1800', GradientType=1 );
   background-size: cover;
+  text-rendering: optimizeLegibility;
+  text-rendering: geometricPrecision;
   
-  font-family: 'Open Sans';
+  font-family: 'Open Sans', sans-serif;
   min-height: 100vh;
 }
-
-.grid-wrapper,
-.filter-wrapper {
-  max-width: 1280px;
-  display: block;
-  margin: 100px auto;
+h1 {
+  font-family: 'Audiowide', cursive;
+  text-transform: uppercase;
+  text-align: center;
+  color: white;
+  font-size: 7rem;
+  font-weight: 100;
+  margin: 35px 0 65px;
+  
+  -webkit-animation: neon6 1.5s ease-in-out infinite alternate;
+  -moz-animation: neon6 1.5s ease-in-out infinite alternate;
+  animation: neon6 1.5s ease-in-out infinite alternate;
 }
 
+.content-wrapper {
+  padding: 0 55px;
+}
+.options-wrapper {
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  font-weight: 100;
+  padding: 25px 50px;
+}
+
+.item {text-align: center;}
 .song {
   display: inline-block;
   box-shadow: 0px 0px 6px #000;
   margin: 5px 0;
+  max-width: 100%;
 }
 .song .img,
 .song .title-wrapper {
   display: block;
   width: 200px;
+  max-width: 100%;
+  overflow: hidden;
 }
-
 .song .title-wrapper {
   background-color: rgba(0, 0, 0, .75);
   color: white;
@@ -47,4 +68,79 @@ body {
   font-size: .95rem;
   line-height: 1.25em;
   text-align: center;
+}
+
+#filter {
+background: rgba(77,0,179,1);
+background: -moz-linear-gradient(45deg, rgba(77,0,179,1) 0%, rgba(77,0,179,1) 1%, rgba(128,0,179,1) 69%, rgba(128,0,179,1) 100%);
+background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(77,0,179,1)), color-stop(1%, rgba(77,0,179,1)), color-stop(69%, rgba(128,0,179,1)), color-stop(100%, rgba(128,0,179,1)));
+background: -webkit-linear-gradient(45deg, rgba(77,0,179,1) 0%, rgba(77,0,179,1) 1%, rgba(128,0,179,1) 69%, rgba(128,0,179,1) 100%);
+background: -o-linear-gradient(45deg, rgba(77,0,179,1) 0%, rgba(77,0,179,1) 1%, rgba(128,0,179,1) 69%, rgba(128,0,179,1) 100%);
+background: -ms-linear-gradient(45deg, rgba(77,0,179,1) 0%, rgba(77,0,179,1) 1%, rgba(128,0,179,1) 69%, rgba(128,0,179,1) 100%);
+background: linear-gradient(45deg, rgba(77,0,179,1) 0%, rgba(77,0,179,1) 1%, rgba(128,0,179,1) 69%, rgba(128,0,179,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d00b3', endColorstr='#8000b3', GradientType=1 );
+padding: 8px 16px;
+border-radius: 10rem;
+box-shadow: 0px 0px 5px #333;
+display: flex;
+justify-content: space-around;
+margin-bottom: 50px;
+}
+#filter li {
+  display: inline-block;
+}
+#filter li:not(:last-child){
+  margin-right: 8px;
+}
+#filter li a {
+  color: white;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 1em;
+  font-weight: 100;
+  letter-spacing: .2em;
+  text-shadow: 0px 1px 2px #222;
+  position: relative;
+}
+#filter li a:before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0px;
+  height: 1px;
+  background: white;
+  transition: 350ms;
+}
+#filter li a:hover:before,
+#filter li a.active:before{
+  width: 100%;
+  left: 0%;
+}
+
+
+
+@-webkit-keyframes neon6 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff00de, 0 0 35px #ff00de, 0 0 40px #ff00de, 0 0 50px #ff00de, 0 0 75px #ff00de;
+  }
+}
+@-moz-keyframes neon6 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff00de, 0 0 35px #ff00de, 0 0 40px #ff00de, 0 0 50px #ff00de, 0 0 75px #ff00de;
+  }
+}
+@keyframes neon6 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff00de, 0 0 35px #ff00de, 0 0 40px #ff00de, 0 0 50px #ff00de, 0 0 75px #ff00de;
+  }
 }

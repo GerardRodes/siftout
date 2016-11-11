@@ -13,11 +13,12 @@ DEFAULT_OPTIONS = {
   itemSelector: '.siftout-item',
   itemWidth: undefined, //if provided #columns will be ignored and a custom number of columns will be set from itemWidth, columnGap and the size of the grid
   columns: 4,
-  columnGap: 25, //only auto if itemWidth defined
+  columnGap: 25, //only auto if itemWidth defined,
+  rows: undefined,
   rowGap: 25,
   cascadeAnimations: true,
   cascadeDuration: 880, //ms
-  transition: '375ms ease-out'
+  transition: 'transform 375ms ease-out, opacity 375ms ease-out'
 },
 HIDDEN_CSS = {
   opacity: 0,
@@ -54,19 +55,22 @@ GRID_CSS = {
 module.exports = class Siftout {
   
   constructor(customOptions) {
-    this.opt = Object.assign(DEFAULT_OPTIONS, customOptions)
+    this.opt = undefined
     this.items = null
     this.matrix = null
     this.rowsMaxHeights = {}
 
-    this.init()
+    this.init(customOptions)
   }
 
-  init(){
+  init(customOptions){
+    if (customOptions !== undefined) {
+      this.setOptions(customOptions)
+    }
     this.detectBrowser()
+    this.loadItems()
     this.setColumnWidth()
     this.setVariableCSS()
-    this.loadItems()
     this.applyStyles(this.opt.gridElement, GRID_CSS, true)
     this.applyStyles(this.items, ITEM_CSS, true)
     this.buildMatrix()
@@ -74,23 +78,31 @@ module.exports = class Siftout {
     this.bindFilters()
   }
   
+  setOptions(newOptions){
+    let baseOptions = this.opt === undefined ? DEFAULT_OPTIONS : this.opt
+    this.opt = Object.assign(baseOptions, newOptions)
+  }
+  
   setColumnWidth(){
-    
+    console.dir(this.opt)
     if (this.opt.itemWidth !== undefined){
       let gridWidth = this.opt.gridElement.offsetWidth,
           possibleColumns = Math.floor(gridWidth / this.opt.itemWidth)
-      
+          
       if (this.opt.columnGap === 'auto' && possibleColumns > 1){
+        if(this.opt.rows === undefined){
+          possibleColumns = possibleColumns > this.items.length ? this.items.length : possibleColumns
+        } else {
+          possibleColumns = this.items.length / this.opt.rows
+        }
         this.opt.columnGap = (gridWidth - (possibleColumns * this.opt.itemWidth)) / (possibleColumns - 1)
       } else {
-        this.opt.columnGap = gridWidth
-      }
-      
-      let hypotheticalWidth = ((possibleColumns - 1) * this.opt.columnGap) + (this.opt.itemWidth * possibleColumns)
-      
-      while(hypotheticalWidth > gridWidth){
-        possibleColumns -= 1
-        hypotheticalWidth = ((possibleColumns - 1) * this.opt.columnGap) + (this.opt.itemWidth * possibleColumns)
+        let hypotheticalWidth = ((possibleColumns - 1) * this.opt.columnGap) + (this.opt.itemWidth * possibleColumns)
+        
+        while(hypotheticalWidth > gridWidth){
+          possibleColumns -= 1
+          hypotheticalWidth = ((possibleColumns - 1) * this.opt.columnGap) + (this.opt.itemWidth * possibleColumns)
+        }
       }
       
       this.opt.colWidth = this.opt.itemWidth
