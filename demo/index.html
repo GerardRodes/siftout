@@ -337,10 +337,15 @@
         document.getElementById('control-column-gap').setAttribute('disabled','')
         document.getElementById('control-rows').removeAttribute('disabled')
         document.getElementById('control-rows').placeholder = ''
+        if(!document.getElementById('control-item-width').value){
+          document.getElementById('control-item-width').value = 45
+          document.getElementById('control-item-width').placeholder = 'Should be set when auto gap'
+        }
       } else {
         document.getElementById('control-column-gap').removeAttribute('disabled')
         document.getElementById('control-rows').setAttribute('disabled','')
         document.getElementById('control-rows').placeholder = 'Only with column gap auto'
+        document.getElementById('control-item-width').placeholder = 'auto'
       }
     })
     
