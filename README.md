@@ -45,7 +45,7 @@ Inside an item you can write any HTML structure.
 ```
 When creating a new instance of __Siftout__ you can pass as parameter an object with any custom setting you want to define.
 Example:
-```javascript
+```html
 <script type="text/javascript" src="siftout.min.js" ></script>
 <script type="text/javascript" >
   siftout = new Siftout({
