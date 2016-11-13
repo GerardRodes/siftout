@@ -44,6 +44,18 @@ Inside an item you can write any HTML structure.
 </script>
 ```
 When creating a new instance of __Siftout__ you can pass as parameter an object with any custom setting you want to define.
+Example:
+```javascript
+<script type="text/javascript" src="siftout.min.js" ></script>
+<script type="text/javascript" >
+  siftout = new Siftout({
+    gridElement: document.getElementById('grid'),
+    filterElement: document.getElementById('filter'),
+    itemSelector: '.item',
+    columns: 5
+  })
+</script>
+```
 
 ##Settings
 ```javascript
