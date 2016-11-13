@@ -27,7 +27,7 @@ module.exports = {
     new webpack.optimize.UglifyJsPlugin({
       comments: false,
       compress: {
-        // drop_console: true,
+        drop_console: true,
         warnings: false
       },
       mangle: { except: ['Siftout'] }

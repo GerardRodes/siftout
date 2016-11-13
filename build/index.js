@@ -81,19 +81,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	  itemSelector: '.siftout-item',
 	  itemWidth: undefined, //if provided #columns will be ignored and a custom number of columns will be set from itemWidth, columnGap and the size of the grid
 	  columns: 4,
-	  columnGap: 25,
+	  columnGap: 25, //only auto if itemWidth defined,
+	  rows: undefined,
 	  rowGap: 25,
-	  transition: '375ms ease-out'
+	  cascadeAnimations: true,
+	  cascadeDuration: 880, //ms
+	  transition: 'transform 375ms ease-out, opacity 375ms ease-out'
 	},
 	    HIDDEN_CSS = {
 	  opacity: 0,
 	  pointerEvents: 'none',
-	  transform: 'translateZ(-1000px)'
+	  transform: 'translateZ(-1000px)',
+	  zIndex: 0
 	},
 	    VISIBLE_CSS = {
 	  opacity: 1,
 	  pointerEvents: 'auto',
-	  transform: 'translateZ(0px)'
+	  transform: 'translateZ(0px)',
+	  zIndex: 1
 	};
 
 	var ITEM_CSS = {
@@ -110,58 +115,79 @@ return /******/ (function(modules) { // webpackBootstrap
 	  perspective: '1000px',
 	  perspectiveOrigin: 'center center',
 	  backfaceVisibility: 'hidden',
-	  transition: '.64s linear'
+	  // transition: 'height .68s ease-out',
+	  overflow: 'hidden'
 	};
 
 	module.exports = function () {
 	  function Siftout(customOptions) {
 	    _classCallCheck(this, Siftout);
 
-	    this.opt = Object.assign(DEFAULT_OPTIONS, customOptions);
+	    this.opt = undefined;
 	    this.items = null;
 	    this.matrix = null;
 	    this.rowsMaxHeights = {};
 
-	    this.init();
+	    this.init(customOptions);
 	  }
 
 	  _createClass(Siftout, [{
 	    key: 'init',
-	    value: function init() {
+	    value: function init(customOptions) {
+	      if (customOptions !== undefined) {
+	        this.setOptions(customOptions);
+	      }
 	      this.detectBrowser();
+	      this.loadItems();
 	      this.setColumnWidth();
 	      this.setVariableCSS();
-	      this.loadItems();
-	      this.applyStyles(this.opt.gridElement, GRID_CSS);
-	      this.applyStyles(this.items, ITEM_CSS);
+	      this.applyStyles(this.opt.gridElement, GRID_CSS, true);
+	      this.applyStyles(this.items, ITEM_CSS, true);
 	      this.buildMatrix();
 	      this.arrangeItems();
 	      this.bindFilters();
+	    }
+	  }, {
+	    key: 'setOptions',
+	    value: function setOptions(newOptions) {
+	      var baseOptions = this.opt === undefined ? DEFAULT_OPTIONS : this.opt;
+	      this.opt = Object.assign(baseOptions, newOptions);
 	    }
 	  }, {
 	    key: 'setColumnWidth',
 	    value: function setColumnWidth() {
 	      if (this.opt.itemWidth !== undefined) {
 	        var gridWidth = this.opt.gridElement.offsetWidth,
-	            possibleColumns = Math.floor(gridWidth / this.opt.itemWidth),
-	            hypotheticalWidth = (possibleColumns - 1) * this.opt.columnGap + this.opt.itemWidth * possibleColumns;
+	            possibleColumns = Math.floor(gridWidth / this.opt.itemWidth);
 
-	        while (hypotheticalWidth > gridWidth) {
-	          possibleColumns -= 1;
-	          hypotheticalWidth = (possibleColumns - 1) * this.opt.columnGap + this.opt.itemWidth * possibleColumns;
+	        if (this.opt.columnGap === 'auto' && possibleColumns > 1) {
+	          if (this.opt.rows === undefined) {
+	            possibleColumns = possibleColumns > this.items.length ? this.items.length : possibleColumns;
+	          } else {
+	            possibleColumns = Math.floor(this.items.length / this.opt.rows);
+	          }
+	          this.opt.columnGap = (gridWidth - possibleColumns * this.opt.itemWidth) / (possibleColumns - 1);
+	        } else {
+	          var hypotheticalWidth = (possibleColumns - 1) * this.opt.columnGap + this.opt.itemWidth * possibleColumns;
+
+	          while (hypotheticalWidth > gridWidth) {
+	            possibleColumns -= 1;
+	            hypotheticalWidth = (possibleColumns - 1) * this.opt.columnGap + this.opt.itemWidth * possibleColumns;
+	          }
 	        }
 
-	        this.colWidth = this.opt.itemWidth;
+	        this.opt.colWidth = this.opt.itemWidth;
 	        this.opt.columns = possibleColumns;
+	        console.log('possibleColumns: ', possibleColumns);
 	      } else {
-	        this.colWidth = (this.opt.gridElement.offsetWidth - this.opt.columnGap * (this.opt.columns - 1)) / this.opt.columns;
+	        this.opt.colWidth = (this.opt.gridElement.offsetWidth - this.opt.columnGap * (this.opt.columns - 1)) / this.opt.columns;
 	      }
 	    }
 	  }, {
 	    key: 'setVariableCSS',
 	    value: function setVariableCSS() {
-	      ITEM_CSS.maxWidth = this.colWidth + 'px';
-	      ITEM_CSS.width = this.colWidth + 'px';
+	      ITEM_CSS.maxWidth = this.opt.colWidth + 'px';
+	      ITEM_CSS.width = this.opt.colWidth + 'px';
 	      ITEM_CSS.transition = this.opt.transition;
 
 	      if (this.browser.prefix) {
@@ -182,6 +208,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'buildMatrix',
 	    value: function buildMatrix(groups) {
+	      console.dir(this.opt);
 	      this.matrix = Array.from(Array(this.opt.columns)).map(function (col) {
 	        return [];
 	      });
@@ -205,7 +232,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var hiddenItems = Array.from(this.items).filter(function (item) {
 	          return items.indexOf(item) == -1;
 	        });
-	        this.applyStyles(hiddenItems, HIDDEN_CSS);
+	        if (hiddenItems.length > 0) this.applyStyles(hiddenItems, HIDDEN_CSS);
 	      } else {
 	        items = this.items;
 	      }
@@ -213,6 +240,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      Array.from(items).forEach(function (item) {
 	        return item.classList.add('active');
 	      });
+	      this.activeItems = items.length;
 
 	      for (var i in items) {
 	        if (!isNaN(i)) {
@@ -229,6 +257,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _this = this;
 
 	      this.rowsMaxHeights = {};
+
+	      var animationTimerMultiplier = this.opt.cascadeDuration / this.activeItems,
+	          animationQueue = [];
+
 	      this.matrix.forEach(function (col, iCol) {
 	        col.forEach(function (item, iItem) {
 	          var itemId = item.id,
@@ -249,66 +281,108 @@ return /******/ (function(modules) { // webpackBootstrap
 	              done = true;
 	            }
 	          }
-
-	          _this.applyStyles(item.item, {
-	            'transform': 'translateX(' + (iCol * _this.colWidth + iCol * _this.opt.columnGap) + 'px) translateY(' + YPos + 'px)'
+	          animationQueue.push({
+	            item: item.item,
+	            active: item.item.classList.contains('active'),
+	            css: {
+	              transform: 'translateX(' + (iCol * _this.opt.colWidth + iCol * _this.opt.columnGap) + 'px) translateY(' + YPos + 'px)'
+	            }
 	          });
 	        });
-	        _this.applyStyles(col.map(function (item) {
-	          return item.item;
-	        }), VISIBLE_CSS);
 	      });
 
 	      this.updateGridHeight();
+	      var alreadyActive = animationQueue.filter(function (bundle) {
+	        return bundle.active;
+	      }),
+	          notActive = animationQueue.filter(function (bundle) {
+	        return !bundle.active;
+	      });
+	      this.applyStyles(alreadyActive, 'queue');
+	      (function (_main, notActive) {
+	        setTimeout(function () {
+	          _main.applyStyles(notActive, 'queue');
+	        }, _main.opt.cascadeDuration);
+	      })(this, notActive);
+	      this.applyStyles(animationQueue.map(function (bundle) {
+	        return bundle.item;
+	      }), VISIBLE_CSS);
 	    }
 	  }, {
 	    key: 'applyStyles',
-	    value: function applyStyles(items, css) {
+	    value: function applyStyles(items, css, instant, animationTimerMultiplier) {
+	      var _this2 = this;
+
+	      instant = instant === undefined ? false : instant;
+
 	      if (items.length === undefined) items = Array(items);
 
-	      var _main = this;
+	      animationTimerMultiplier = animationTimerMultiplier === undefined ? this.opt.cascadeDuration / items.length : animationTimerMultiplier;
 
 	      Array.from(items).forEach(function (item, i) {
-	        (function (_main) {
-	          setTimeout(function (_main) {
-	            for (var prop in css) {
-	              if (prop !== 'transform' || item.style[prop] === '') {
-	                item.style[prop] = css[prop];
-	              } else {
-	                (function () {
-	                  var newFilters = _main.splitTransform(css.transform),
-	                      oldFilters = _main.splitTransform(item.style.transform);
+	        if (instant || !_this2.opt.cascadeAnimations) {
+	          _this2.editStyle(item, css);
+	        } else {
+	          var styles = undefined,
+	              target = undefined;
+	          if (css === 'queue') {
+	            styles = item.css;
+	            target = item.item;
+	          } else {
+	            styles = css;
+	            target = item;
+	          }
 
-	                  var uneditedFilters = oldFilters.filter(function (oldFilter) {
-	                    return newFilters.filter(function (newFilter) {
-	                      return oldFilter.substr(0, oldFilter.indexOf('(')) === newFilter.substr(0, newFilter.indexOf('('));
-	                    }).length === 0;
-	                  });
+	          (function (_main, target, styles, i, animationTimerMultiplier) {
+	            setTimeout(function () {
+	              _main.editStyle(target, styles);
+	            }, animationTimerMultiplier * i);
+	          })(_this2, target, styles, i, animationTimerMultiplier);
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'editStyle',
+	    value: function editStyle(item, css) {
+	      var _this3 = this;
 
-	                  var finalFilters = newFilters.reduce(function (a, b) {
-	                    return a + ' ' + b;
-	                  });
-	                  if (uneditedFilters.length > 0) {
-	                    finalFilters += ' ' + uneditedFilters.reduce(function (a, b) {
-	                      return a + ' ' + b;
-	                    });
-	                  }
+	      for (var prop in css) {
+	        if (prop !== 'transform' || item.style[prop] === '') {
+	          item.style[prop] = css[prop];
+	        } else {
+	          (function () {
 
-	                  if (item.style.transform != finalFilters) {
-	                    if (_main.browser.prefix) {
-	                      item.style[_main.customBrowserAttr('transform')] = finalFilters;
-	                    }
-	                    //checking if custom attributes had apply
-	                    if (item.style.transform != finalFilters) {
-	                      item.style.transform = finalFilters;
-	                    }
-	                  }
-	                })();
+	            var newFilters = _this3.splitTransform(css.transform),
+	                oldFilters = _this3.splitTransform(item.style.transform),
+	                finalFilters = undefined;
+
+	            var uneditedFilters = oldFilters.filter(function (oldFilter) {
+	              return newFilters.filter(function (newFilter) {
+	                return oldFilter.substr(0, oldFilter.indexOf('(')) === newFilter.substr(0, newFilter.indexOf('('));
+	              }).length === 0;
+	            });
+
+	            finalFilters = newFilters.reduce(function (a, b) {
+	              return a + ' ' + b;
+	            });
+	            if (uneditedFilters.length > 0) {
+	              finalFilters += ' ' + uneditedFilters.reduce(function (a, b) {
+	                return a + ' ' + b;
+	              });
+	            }
+
+	            if (item.style.transform != finalFilters) {
+	              if (_this3.browser.prefix) {
+	                item.style[_this3.customBrowserAttr('transform')] = finalFilters;
+	              }
+	              //checking if custom attributes had apply
+	              if (item.style.transform != finalFilters) {
+	                item.style.transform = finalFilters;
 	              }
 	            }
-	          }, 100 * i);
-	        })();
-	      });
+	          })();
+	        }
+	      }
 	    }
 	  }, {
 	    key: 'splitTransform',
@@ -386,12 +460,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	        height += this.rowsMaxHeights[iRow];
 	      }
 
-	      this.opt.gridElement.style.height = height + (highestCol.length - 1) * this.opt.rowGap + 'px';
+	      var actualHeight = this.opt.gridElement.style.height ? parseInt(this.opt.gridElement.style.height.slice(0, -2)) : 0,
+	          newHeight = height + (highestCol.length - 1) * this.opt.rowGap;
+
+	      if (newHeight >= actualHeight) {
+	        this.opt.gridElement.style.height = newHeight + 'px';
+	      } else {
+	        ;(function (_main) {
+	          setTimeout(function () {
+	            _main.opt.gridElement.style.height = newHeight + 'px';
+	          }, _main.opt.cascadeDuration);
+	        })(this);
+	      }
 	    }
 	  }, {
 	    key: 'bindFilters',
 	    value: function bindFilters() {
-	      var _this2 = this;
+	      var _this4 = this;
 
 	      var filterItems = Array.from(this.opt.filterElement.querySelectorAll('[data-group]')),
 	          timeouts = [];
@@ -407,13 +492,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	          var groups = e.target.getAttribute('data-group').split(',').map(function (group) {
 	            return group.trim();
 	          });
-	          _this2.buildMatrix(groups);
-	          _this2.arrangeItems();
+	          _this4.buildMatrix(groups);
+	          _this4.arrangeItems();
 	        });
 
 	        //css optimization, tells the browser that some transformations are going to be asked      
 	        filter.addEventListener('mouseover', function (e) {
-	          Array.from(_this2.items).forEach(function (item) {
+	          Array.from(_this4.items).forEach(function (item) {
 	            return item.style.willChange = 'transform, opacity';
 	          });
 	          timeouts.forEach(function (to) {
@@ -423,7 +508,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        filter.addEventListener('mouseout', function (e) {
 	          timeouts.push(setTimeout(function () {
-	            return Array.from(_this2.items).forEach(function (item) {
+	            return Array.from(_this4.items).forEach(function (item) {
 	              return item.style.willChange = 'auto';
 	            });
 	          }, 1000));

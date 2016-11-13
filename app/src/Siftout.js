@@ -47,8 +47,8 @@ GRID_CSS = {
   perspective: '1000px',
   perspectiveOrigin: 'center center',
   backfaceVisibility: 'hidden',
-  transition: '.68 ease-out'
-  // overflow: 'hidden'
+  // transition: 'height .68s ease-out',
+  overflow: 'hidden'
 }
 
 
@@ -84,7 +84,6 @@ module.exports = class Siftout {
   }
   
   setColumnWidth(){
-    console.dir(this.opt)
     if (this.opt.itemWidth !== undefined){
       let gridWidth = this.opt.gridElement.offsetWidth,
           possibleColumns = Math.floor(gridWidth / this.opt.itemWidth)
@@ -93,7 +92,7 @@ module.exports = class Siftout {
         if(this.opt.rows === undefined){
           possibleColumns = possibleColumns > this.items.length ? this.items.length : possibleColumns
         } else {
-          possibleColumns = this.items.length / this.opt.rows
+          possibleColumns = Math.floor(this.items.length / this.opt.rows)
         }
         this.opt.columnGap = (gridWidth - (possibleColumns * this.opt.itemWidth)) / (possibleColumns - 1)
       } else {
@@ -201,6 +200,7 @@ module.exports = class Siftout {
       })
     })
     
+    this.updateGridHeight()
     let alreadyActive = animationQueue.filter(bundle => bundle.active),
         notActive     = animationQueue.filter(bundle => !bundle.active)
     this.applyStyles(alreadyActive, 'queue');
@@ -211,7 +211,6 @@ module.exports = class Siftout {
     })(this, notActive)
     this.applyStyles(animationQueue.map(bundle => bundle.item), VISIBLE_CSS)
     
-    this.updateGridHeight()
   }
   
   applyStyles(items, css, instant, animationTimerMultiplier){
@@ -246,26 +245,24 @@ module.exports = class Siftout {
   }
   
   editStyle(item, css){
-    let finalFilters = undefined
     for (let prop in css) {
       if (prop !== 'transform' || item.style[prop] === '') {
         item.style[prop] = css[prop]
       } else {
         
-        if(finalFilters === undefined){
-          let newFilters = this.splitTransform(css.transform),
-              oldFilters = this.splitTransform(item.style.transform)
-              
-          let uneditedFilters = oldFilters.filter(oldFilter =>
-            newFilters.filter(newFilter =>
-              oldFilter.substr(0, oldFilter.indexOf('(')) === newFilter.substr(0, newFilter.indexOf('('))
-            ).length === 0
-          )
-          
-          finalFilters = newFilters.reduce((a, b) => a+' '+b)
-          if (uneditedFilters.length > 0) {
-            finalFilters += ' '+uneditedFilters.reduce((a, b) => a+' '+b)
-          }
+        let newFilters = this.splitTransform(css.transform),
+            oldFilters = this.splitTransform(item.style.transform),
+            finalFilters = undefined
+            
+        let uneditedFilters = oldFilters.filter(oldFilter =>
+          newFilters.filter(newFilter =>
+            oldFilter.substr(0, oldFilter.indexOf('(')) === newFilter.substr(0, newFilter.indexOf('('))
+          ).length === 0
+        )
+        
+        finalFilters = newFilters.reduce((a, b) => a+' '+b)
+        if (uneditedFilters.length > 0) {
+          finalFilters += ' '+uneditedFilters.reduce((a, b) => a+' '+b)
         }
         
         if(item.style.transform != finalFilters){
@@ -328,7 +325,18 @@ module.exports = class Siftout {
       height += this.rowsMaxHeights[iRow]
     }
     
-    this.opt.gridElement.style.height = height + ((highestCol.length - 1) * this.opt.rowGap) + 'px'
+    let actualHeight = this.opt.gridElement.style.height ? parseInt(this.opt.gridElement.style.height.slice(0,-2)) : 0,
+        newHeight    = height + ((highestCol.length - 1) * this.opt.rowGap)
+        
+    if (newHeight >= actualHeight) {
+      this.opt.gridElement.style.height = newHeight + 'px'
+    } else {
+      ;(function(_main){
+        setTimeout(function(){
+          _main.opt.gridElement.style.height = newHeight + 'px'
+        }, _main.opt.cascadeDuration)
+      })(this)
+    }
   }
   
   bindFilters(){

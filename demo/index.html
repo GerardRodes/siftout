@@ -8,7 +8,6 @@
   <link rel="stylesheet" type="text/css" href="./reset.css" />
   <link rel="stylesheet" type="text/css" href="./grid.css" />
   <link rel="stylesheet" type="text/css" href="./main.css" />
-  
 </head>
 <body>
 
@@ -17,14 +16,14 @@
       <div class="col-md-2 no-pad">
         <div class="options-wrapper">
           <div id="options">
-          
+            <h2>Options</h2>
             <div class="control-group">
               <div class="option-wrapper">
-                <label for="control-item-width">Item width</label>
+                <label for="control-item-width">Item width (px)</label>
                 <input type="number" id="control-item-width" placeholder="auto" />
               </div>
               <div class="option-wrapper">
-                <label for="control-transition">Item transition</label>
+                <label for="control-transition">Item transition (css value)</label>
                 <input type="text" id="control-transition" placeholder="transform 375ms ease-out, opacity 375ms ease-out" />
               </div>
             </div>
@@ -35,8 +34,11 @@
                 <input type="number" id="control-columns" placeholder="5" />
               </div>
               <div class="option-wrapper">
-                <label for="control-column-gap">Column gap</label>
+                <label for="control-column-gap">Column gap (px)</label>
                 <input type="number" id="control-column-gap" placeholder="25" />
+              </div>
+              <div class="option-wrapper">
+                <label for="control-column-gap">Auto gap size</label>
                 <input type="checkbox" id="control-column-gap-auto" title="Auto gap size" />
               </div>
               <div class="option-wrapper">
@@ -44,7 +46,7 @@
                 <input type="number" id="control-rows" disabled placeholder="Only with column gap auto" />
               </div>
               <div class="option-wrapper">
-                <label for="control-row-gap">Row gap</label>
+                <label for="control-row-gap">Row gap (px)</label>
                 <input type="number" id="control-row-gap" placeholder="25" />
               </div>
             </div>
@@ -55,12 +57,19 @@
                 <label for="control-cascade-animations">Cascade animations</label>
               </div> -->
               <div class="option-wrapper">
-                <label for="control-cascade-duration">Cascade animations duration</label>
+                <label for="control-cascade-duration">Cascade animations duration (ms)</label>
                 <input type="number" id="control-cascade-duration" placeholder="880" />
               </div>
             </div>
             
             <button id="apply" >Apply</button>
+            
+            <div class="control-group">
+              <div class="option-wrapper">
+                <label for="control-show-grid">Show grid</label>
+                <input type="checkbox" id="control-show-grid" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -340,12 +349,24 @@
         if(!document.getElementById('control-item-width').value){
           document.getElementById('control-item-width').value = 125
           document.getElementById('control-item-width').placeholder = 'Should be set when auto gap'
+          document.getElementById('control-columns').value = ''
         }
       } else {
         document.getElementById('control-column-gap').removeAttribute('disabled')
         document.getElementById('control-rows').setAttribute('disabled','')
         document.getElementById('control-rows').placeholder = 'Only with column gap auto'
         document.getElementById('control-item-width').placeholder = 'auto'
+      }
+    })
+    
+    document
+    .getElementById('control-show-grid')
+    .addEventListener('change', function(e){
+      var grid = document.getElementById('grid')
+      if (this.checked) {
+        grid.classList.add('dev')
+      } else {
+        grid.classList.remove('dev')
       }
     })
     
