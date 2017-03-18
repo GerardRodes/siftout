@@ -1,7 +1,7 @@
 # Siftout
 Sort elements by categories on responsive grid
 
-##Cool Facts
+## Cool Facts
 - made with ES6
 - responsive
 - multiple browser support
@@ -11,9 +11,9 @@ Sort elements by categories on responsive grid
 
 ![Demo preview](http://i.imgur.com/g29DZvN.gif)
 
-#Use
-##HTML
-###Filters
+# Usage
+## HTML
+### Filters
 A filter just needs the attribute `data-group` to be dettected, there is no need to be a link attribute or any else, it's up to you.
 The `data-group` attribute has to be defined with any kind of string without a comma `,`.
 ```html
@@ -24,7 +24,7 @@ The `data-group` attribute has to be defined with any kind of string without a c
 </ul>
 ```
 
-###Items
+### Items
 Items must be on a grid _depth doesn't matters, or shouldn't, i didn't try_, every item should have a `class` to select all them and a `data-group` attribute to specify the groups to which it belongs, groups must be separated with a comma `,`.
 Inside an item you can write any HTML structure.
 ```html
@@ -36,7 +36,7 @@ Inside an item you can write any HTML structure.
 ```
 
 
-###Initialization
+### Initialization
 ```html
 <script type="text/javascript" src="siftout.min.js" ></script>
 <script type="text/javascript" >
@@ -57,7 +57,7 @@ Example:
 </script>
 ```
 
-##Settings
+## Settings
 ```javascript
 name: gridElement
 default: document.getElementById('siftout-grid')
